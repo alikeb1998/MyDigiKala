@@ -1,0 +1,108 @@
+/*
+ * Copyright (C) 2012 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package androidx.appcompat.app;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.SpinnerAdapter;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
+import androidx.annotation.StringRes;
+import androidx.appcompat.R;
+import androidx.appcompat.view.ActionMode;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * A primary toolbar within the activity that may display the activity title, application-level
+ * navigation affordances, and other interactive items.
+ *
+ * <p>The action bar appears at the top of an activity's window when the activity uses the
+ * AppCompat's {@link R.style#Theme_AppCompat AppCompat} theme (or one of its descendant themes).
+ * You may otherwise add the action bar by calling {@link
+ * AppCompatDelegate#requestWindowFeature(int)  requestFeature(FEATURE_SUPPORT_ACTION_BAR)} or by
+ * declaring it in a custom theme with the
+ * {@link R.styleable#AppCompatTheme_windowActionBar windowActionBar} property.</p>
+ *
+ * <p>The action bar may be represented by any Toolbar widget within the application layout.
+ * The application may signal to the Activity which Toolbar should be treated as the Activity's
+ * action bar. Activities that use this feature should use one of the supplied
+ * <code>.NoActionBar</code> themes, set the
+ * {@link R.styleable#AppCompatTheme_windowActionBar windowActionBar} attribute to
+ * <code>false</code> or otherwise not request the window feature.</p>
+ *
+ * <p>If your activity has an options menu, you can make select items accessible directly from the
+ * action bar as "action items". You can also  modify various characteristics of the action bar or
+ * remove it completely.</p>
+ *
+ * <p>The navigation button (formerly "Home") takes over the space previously occupied by the
+ * application icon. Apps wishing to express a stronger branding should use their brand colors
+ * heavily in the action bar and other application chrome or use a {@link #setLogo(int) logo}
+ * in place of their standard title text.</p>
+ *
+ * <p>From your activity, you can retrieve an instance of {@link ActionBar} by calling {@link
+ * AppCompatActivity#getSupportActionBar()}  getSupportActionBar()}.</p>
+ *
+ * <p>In some cases, the action bar may be overlayed by another bar that enables contextual actions,
+ * using an {@link ActionMode}. For example, when the user selects one or more items in
+ * your activity, you can enable an action mode that offers actions specific to the selected
+ * items, with a UI that temporarily replaces the action bar. Although the UI may occupy the
+ * same space, the {@link ActionMode} APIs are distinct and independent from those for
+ * {@link ActionBar}.</p>
+ *
+ * <div class="special reference">
+ * <h3>Developer Guides</h3>
+ * <p>For information about how to use the action bar, including how to add action items, navigation
+ * modes and more, read the <a href="{@docRoot}guide/topics/ui/actionbar.html">Action
+ * Bar</a> developer guide.</p>
+ * </div>
+ */
+public abstract class ActionBar {
+
+    /** @hide */
+    @RestrictTo(LIBRARY_GROUP)
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({NAVIGATION_MODE_STANDARD, NAVIGATION_MODE_LIST, NAVIGATION_MODE_TABS})
+    public @interface NavigationMode {}
+
+    /**
+     * Standard navigation mode. Consists of either a logo or icon
+     * and title text with an optional subtitle. Clicking any of these elements
+     * will dispatch onOptionsItemSelected to the host Activity with
+     * a MenuItem with item ID android.R.id.home.
+     *
+     * @deprecated Action bar navigation modes are deprecated and not supported by inline
+     * toolbar action bars. Consider using other
+     * 

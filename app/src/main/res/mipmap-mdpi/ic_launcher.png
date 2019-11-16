@@ -1,0 +1,54 @@
+/*
+ * Copyright (C) 2014 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package androidx.appcompat.widget;
+
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+
+import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewDebug;
+import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
+import androidx.annotation.StyleRes;
+import androidx.appcompat.view.menu.ActionMenuItemView;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuItemImpl;
+import androidx.appcompat.view.menu.MenuPresenter;
+import androidx.appcompat.view.menu.MenuView;
+
+/**
+ * ActionMenuView is a presentation of a series of menu options as a View. It provides
+ * several top level options as action buttons while spilling remaining options over as
+ * items in an overflow menu. This allows applications to present packs of actions inline with
+ * specific or repeating content.
+ */
+public class ActionMenuView extends LinearLayoutCompat implements MenuBuilder.ItemInvoker,
+        MenuView {
+
+    private static final String TAG = "ActionMenuView";
+
+    static final int MIN_CELL_SIZE = 56; // dips
+    static final int G
